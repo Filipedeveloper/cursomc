@@ -41,6 +41,11 @@ public class Cliente implements Serializable {
 	@JsonManagedReference
 	private List<Endereco> enderecos = new ArrayList<>();
 	
+	@OneToMany(mappedBy = "cliente")
+	private List<Pedido> pedidos = new ArrayList<>();
+	
+	
+
 	
 
 	public Cliente() {
@@ -112,6 +117,18 @@ public class Cliente implements Serializable {
 
 	public void setCpfCnpj(String cpfCnpj) {
 		CpfCnpj = cpfCnpj;
+	}
+	
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+
+	public void setTipo(Integer tipo) {
+		this.tipo = tipo;
 	}
 
 	
