@@ -72,6 +72,7 @@ public class CursomcApplication implements CommandLineRunner {
 
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
+		//Teste
 		Categoria cat1 = new Categoria(null, "INFORMÁTICA");
 		Categoria cat2 = new Categoria(null, "ESCRITÓRIO");
 		
