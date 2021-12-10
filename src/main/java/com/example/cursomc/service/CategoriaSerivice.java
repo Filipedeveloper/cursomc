@@ -1,5 +1,6 @@
 package com.example.cursomc.service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -23,6 +24,12 @@ public class CategoriaSerivice {
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! id: " + id + ", Tipo: " + Categoria.class.getName(), null));
 	}
+	
+	public List<Categoria> findAll() {
+		return rep.findAll();
+	}
+	
+	
 	
 	public Categoria insert(Categoria obj) {
 		obj.setId(null);
