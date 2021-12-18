@@ -2,6 +2,7 @@ package com.example.cursomc.domin;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -52,6 +53,8 @@ public class Endereco implements Serializable{
 		this.cliente = cliente;
 		this.setCidade(cidade);
 	}
+	
+	
 
 	
 	public Cliente getCliente() {
@@ -131,6 +134,8 @@ public class Endereco implements Serializable{
 		super();
 		this.id = id;
 	}
+
+	
 
 	public Cidade getCidade() {
 		return cidade;

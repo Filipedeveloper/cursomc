@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.example.cursomc.domin.Cliente;
 import com.example.cursomc.domin.Cliente;
 import com.example.cursomc.dto.ClienteDTO;
+import com.example.cursomc.dto.ClienteNewDTO;
 import com.example.cursomc.service.ClienteSerivice;
 
 @RestController
@@ -45,14 +46,14 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(listaDTO);	
 	}
 	
-	/*@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO objDTO){
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDTO){
 		Cliente obj = service.fromDTO(objDTO);
 		obj = service.insert(obj);
 		//ADICIONA O ID DA INCERÇAO NA URI
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{/id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
-	}*/
+	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody ClienteDTO objDTO, @PathVariable Integer id) {
