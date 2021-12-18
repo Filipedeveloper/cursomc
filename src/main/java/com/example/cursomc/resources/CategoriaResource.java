@@ -47,10 +47,10 @@ public class CategoriaResource {
 	
 	@RequestMapping(value="/page", method=RequestMethod.GET)
 	public ResponseEntity<Page<CategoriaDTO>> findPage(
-			@RequestParam(value="page", defaultValue = "0") Integer page, 
-			@RequestParam(value="linespage", defaultValue = "24") Integer linesPage, 
-			@RequestParam(value="order", defaultValue = "nome") String orderBy, 
-			@RequestParam(value="direction", defaultValue = "ASC") String direction) {
+		@RequestParam(value="page", defaultValue = "0") Integer page, 
+		@RequestParam(value="linespage", defaultValue = "24") Integer linesPage, 
+		@RequestParam(value="order", defaultValue = "nome") String orderBy, 
+		@RequestParam(value="direction", defaultValue = "ASC") String direction) {
 		
 		Page<Categoria> lista = service.findPage(page, linesPage, orderBy, direction);
 		Page<CategoriaDTO> listaDTO = lista.map(obj -> new CategoriaDTO(obj));
