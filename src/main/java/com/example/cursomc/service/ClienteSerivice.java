@@ -38,6 +38,7 @@ public class ClienteSerivice {
 	@Autowired
 	private EnderecoRepository enderecoRepository;
 	
+	
 	public Cliente buscar(Integer id) {
 		Optional<Cliente> obj = rep.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(

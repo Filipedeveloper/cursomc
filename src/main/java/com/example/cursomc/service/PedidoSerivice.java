@@ -12,6 +12,7 @@ import com.example.cursomc.domin.PagamentoBoleto;
 import com.example.cursomc.domin.Pedido;
 import com.example.cursomc.domin.enums.TipoEstadoPagamento;
 import com.example.cursomc.exceptions.ObjectNotFoundException;
+import com.example.cursomc.repositories.ClienteRepository;
 import com.example.cursomc.repositories.ItemPedidoRepository;
 import com.example.cursomc.repositories.PagamentoRepository;
 import com.example.cursomc.repositories.PedidoRepository;
@@ -32,6 +33,9 @@ public class PedidoSerivice {
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
 	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
 	public Pedido buscar(Integer id) {
 		Optional<Pedido> obj = rep.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
@@ -40,6 +44,7 @@ public class PedidoSerivice {
 	
 	public Pedido insert(Pedido obj) {
 		obj.setId(null);
+		obj.setCliente(clienteRepository.findById(obj.getCliente().getId()).get());
 		obj.setInstante(new Date());
 		obj.getPagamento().setEstado(TipoEstadoPagamento.PENDETE);
 		obj.getPagamento().setPedido(obj);
@@ -52,11 +57,13 @@ public class PedidoSerivice {
 		
 		for(ItemPedido item : obj.getItens()) {
 			item.setDesconto(0.0);
-			item.setPreco(produtoRepository.findById(item.getProduto().getId()).get().getPreco());
+			item.setProduto(produtoRepository.findById(item.getProduto().getId()).get());
+			item.setPreco(item.getProduto().getPreco());
 			item.setPedido(obj);
 		}
 		
 		itemPedidoRepository.saveAll(obj.getItens());
+		System.out.println(obj);
 		return obj;
 		
 	}
