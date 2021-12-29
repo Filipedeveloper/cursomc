@@ -19,6 +19,7 @@ import com.example.cursomc.domin.PagamentoBoleto;
 import com.example.cursomc.domin.PagamentoCartao;
 import com.example.cursomc.domin.Pedido;
 import com.example.cursomc.domin.Produto;
+import com.example.cursomc.domin.enums.Perfil;
 import com.example.cursomc.domin.enums.TipoCliente;
 import com.example.cursomc.domin.enums.TipoEstadoPagamento;
 import com.example.cursomc.repositories.CategoriaRepository;
@@ -96,14 +97,19 @@ public class DBService {
 				Cidade c3 = new Cidade(null, "CAMPINAS", est2);
 				
 				Cliente cli1 = new Cliente(null, "MARIA SILVANA", "MARIA@GMAIL.COM", "32232322278", TipoCliente.PESSOAFISICA, pe.encode("123"));
+				Cliente cli2 = new Cliente(null, "ANA COSTA", "ANA@GMAIL.COM", "31628382740", TipoCliente.PESSOAFISICA, pe.encode("123"));
+				cli2.addPerfil(Perfil.ADMIN);
+				
 				cli1.getTelefones().addAll(Arrays.asList("33337575", "61988885555"));
+				cli2.getTelefones().addAll(Arrays.asList("33337575", "61988885555"));
 				
 				Endereco e1 = new Endereco(null, "RUA FLORES ", "300", "APTO 303", "JARDIM", "38220834", cli1, c1);
 				Endereco e2 = new Endereco(null, "AVENIDA MATOS ", "105", "SALA 800", "CENTRO", "38251458", cli1, c2);
+				Endereco e3 = new Endereco(null, "AVENIDA GLORIANO ", "206", null, "CENTRO", "38251458", cli1, c2);
 				
 				SimpleDateFormat sds = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 				Pedido ped1 = new Pedido(null, sds.parse("30/09/2017 10:32"),  cli1, e1);
-				Pedido ped2 = new Pedido(null, sds.parse("10/10/2017 10:32"),  cli1, e2);
+				Pedido ped2 = new Pedido(null, sds.parse("10/10/2017 10:32"),  cli2, e2);
 				
 				Pagamento pgto1 = new PagamentoCartao(null, TipoEstadoPagamento.QUITADO, ped1, 6);
 				ped1.setPagamento(pgto1);
@@ -166,9 +172,11 @@ public class DBService {
 				cidadeRepository.save(c3);
 				
 				clienteRepository.save(cli1);
+				clienteRepository.save(cli2);
 				
 				enderecoRepository.save(e1);
 				enderecoRepository.save(e2);
+				enderecoRepository.save(e3);
 				
 				pedidoRepository.save(ped1);
 				pedidoRepository.save(ped2);
