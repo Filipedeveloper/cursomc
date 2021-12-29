@@ -15,13 +15,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import org.hibernate.validator.constraints.UniqueElements;
-
 import com.example.cursomc.domin.enums.TipoCliente;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -34,6 +30,9 @@ public class Cliente implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	
+	@JsonIgnore
+	private String senha;
 	
 	@Column(unique = true)
 	private String email;
@@ -58,15 +57,24 @@ public class Cliente implements Serializable {
 	public Cliente() {
 	}
 	
-	public Cliente(Integer id, String nome, String email, String cpfCnpj, TipoCliente tipo) {
+	public Cliente(Integer id, String nome, String email, String cpfCnpj, TipoCliente tipo, String senha) {
 		super();
 		this.id = id;
+		this.senha = senha;
 		this.nome = nome;
 		this.email = email;
 		this.CpfCnpj = cpfCnpj;
 		this.tipo = (tipo == null ) ? null : tipo.getCod();
 		
 		
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	

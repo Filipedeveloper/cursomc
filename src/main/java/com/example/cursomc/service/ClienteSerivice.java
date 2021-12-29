@@ -3,12 +3,12 @@ package com.example.cursomc.service;
 import java.util.List;
 import java.util.Optional;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +16,6 @@ import com.example.cursomc.domin.Cidade;
 import com.example.cursomc.domin.Cliente;
 import com.example.cursomc.domin.Endereco;
 import com.example.cursomc.domin.enums.TipoCliente;
-import com.example.cursomc.domin.Cliente;
 import com.example.cursomc.dto.ClienteDTO;
 import com.example.cursomc.dto.ClienteNewDTO;
 import com.example.cursomc.exceptions.DataIntegrityException;
@@ -24,10 +23,12 @@ import com.example.cursomc.exceptions.ObjectNotFoundException;
 import com.example.cursomc.repositories.CidadeRepository;
 import com.example.cursomc.repositories.ClienteRepository;
 import com.example.cursomc.repositories.EnderecoRepository;
-import com.example.cursomc.repositories.ClienteRepository;
 
 @Service
 public class ClienteSerivice {
+	
+	@Autowired
+	private BCryptPasswordEncoder pe;	
 	
 	@Autowired
 	private ClienteRepository rep;
@@ -83,11 +84,11 @@ public class ClienteSerivice {
 	}
 	
 	public Cliente fromDTO(ClienteDTO objDTO) {
-		return new Cliente(objDTO.getId(), objDTO.getNome(), objDTO.getEmail(), null, null);
+		return new Cliente(objDTO.getId(), objDTO.getNome(), objDTO.getEmail(), null, null, null);
 	}
 	
 	public Cliente fromDTO(ClienteNewDTO objDTO) {
-		Cliente cli = new Cliente(null, objDTO.getNome(), objDTO.getEmail(), objDTO.getCpfCnpj(), TipoCliente.toEnem(objDTO.getTipo()));
+		Cliente cli = new Cliente(null, objDTO.getNome(), objDTO.getEmail(), objDTO.getCpfCnpj(), TipoCliente.toEnem(objDTO.getTipo()), pe.encode(objDTO.getSenha()));
 		Optional<Cidade> cid = cidrep.findById(objDTO.getCidadeId());	
 		Endereco end = new Endereco(null, objDTO.getLogradouro(), objDTO.getNumero(), objDTO.getComplemento(), objDTO.getBairro(), objDTO.getCep(), cli, cid.get());
 		cli.getEnderecos().add(end);
