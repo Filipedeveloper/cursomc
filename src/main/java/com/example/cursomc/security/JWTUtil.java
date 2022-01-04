@@ -14,17 +14,16 @@ public class JWTUtil {
 	
 	@Value("${jwt.secret}")
 	private String secret;
-	
+
 	@Value("${jwt.expiration}")
-	private String expiration;
+	private Long expiration;
 	
-	public String generationToken(String username) {
+	public String generateToken(String username) {
 		return Jwts.builder()
-					.setSubject(username)
-					.setExpiration(new Date(System.currentTimeMillis() + expiration))
-					.signWith(SignatureAlgorithm.HS512, secret.getBytes())
-					.compact();
-					
+				.setSubject(username)
+				.setExpiration(new Date(System.currentTimeMillis() + expiration))
+				.signWith(SignatureAlgorithm.HS512, secret.getBytes())
+				.compact();
 	}
 
 }
